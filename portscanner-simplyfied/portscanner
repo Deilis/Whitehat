@@ -1,0 +1,21 @@
+#!/user/bin/python
+
+import socket
+from termcolor import colored
+
+sock = socket.socket(socket.AF_INET, socket_SOCK_STREAM)
+socket.setdefaulttimeout(2)
+
+host = raw_input("[*] IP adresas skenavimui: ")
+#port = int(raw_input("[*] Portas skenavimui: ")) <- jei reiktų specifinio porto nuimam hastag'ą
+
+def portscanner(port):
+    if sock.connect_ex((host,port)):
+        print (colored("[!]Port %d yra uždarytas" % (port), 'red'))
+    else:
+        print (colored("[+]Port %d yra atidarytas" % (port)), 'green')
+
+for port in range(1,1000):
+    portscanner(port)
+
+portscanner(port)
