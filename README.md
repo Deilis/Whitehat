@@ -1,2 +1,2 @@
 # Whitehat
-White hat stuff
+Just white hat stuff n chill
