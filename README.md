@@ -4,7 +4,7 @@ Just white hat stuff n chill
 Upcoming things on Ethical hacking, penetration testing and network security while.
 
 1. Easy port scanner. [Not advanced scanner] (Done).
-2. Advanced port scanner (Not done).
+2. Advanced port scanner [Panašus į NMAP] (Done).
 3. Vulnerability scanner (not done).
 4. Automating SSH (not done).
 5. SSH brute-forcer (not done).
