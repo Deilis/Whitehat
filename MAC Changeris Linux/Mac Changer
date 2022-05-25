@@ -1,0 +1,58 @@
+from email import parser
+from ssl import Options
+import sys
+import subprocess
+import argparse
+import random
+import time
+import re
+
+def get_arguments():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("-i", "--interfeisas")
+        dest="interface",
+        help="MacChangeris." "Parašom ifconfig dėl mac"
+
+options = parser.parse_args()
+if options.interface:
+    return options.interface
+else:
+    parser.error("[!] Netinkama užklausa." "Daugiau pagalbos --help")
+
+def change_mac(interface, new_mac_address):
+    subprocess.call(["sudo", "ifconfig", interface, "down"])
+    subprocess.call(["sudo", "ifconfig", interface, "hw", "ether", new_mac_address])
+    subrpocess.call(["sudo", "ifconfig", interface, "up"])
+
+def get_random_mac_adress():
+    characters = "0123456789abcdefgh"
+    random_mac_adress = "00"
+    for i in range(5):
+        random_mac_adress += ":" + \
+            random.choice(characters) \
+            + random.choice(characters)
+    return random_mac_adress
+
+def get_current_mac(interface):
+    output = subprocess.check_output(["ifconfig", interface])
+    return re.search("\w\w:\w\w:\w\w:\w\w:\w\w:\w\w"), str(output).group(0)
+
+if __name__ == "__main__":
+    print("[*Linux Mac changeris*]")
+
+TIME_TO_WAIT = 60
+interface = get_arguments()
+current_mac = get_current_mac(interface)
+try:
+    while True:
+        random_mac = get_random_mac_address()
+        change_mac(interface, random_mac)
+        new_mac_summary = subprocess.check_output(["ifconfig", interface])
+        if random_mac in str(new_mac_summary):
+            print("\r[*] Naujas MAC adresas", random_mac, end=" ")
+            sys.stdout.fulsh()
+        time.sleep(TIME_TO_WAIT)
+
+    except KeyboardInterrupt:
+        change_mac(interface, current_mac)
+        print["\n[+] Uždaroma MAC changeris."]
